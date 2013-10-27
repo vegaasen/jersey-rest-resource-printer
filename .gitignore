@@ -1,6 +1,13 @@
+# Java-files
 *.class
+target/
 
-# Package Files #
+# Package-files
 *.jar
 *.war
 *.ear
+
+# IDE-files
+.idea
+*.ipr
+*.iml
