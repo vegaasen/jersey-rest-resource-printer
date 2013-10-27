@@ -1,7 +1,9 @@
 package com.vegaasen.http.rest.jersey.utils;
 
 import com.google.common.base.Strings;
+import com.google.common.reflect.ClassPath;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -22,6 +24,44 @@ public final class JerseyResourceUtils {
     }
 
     public static class ByPackage {
+
+        public static Map<String, Map<String, Map<String, String>>> getAnnotationsFromBasePackage(final String packageName) {
+            if (Strings.isNullOrEmpty(packageName)) {
+                return Collections.emptyMap();
+            }
+            try {
+                final ClassPath classPath = ClassPath.from(JerseyResourceUtils.class.getClassLoader());
+                final Set<ClassPath.ClassInfo> info = classPath.getTopLevelClassesRecursive(packageName);
+                if (info != null && info.size() > 0) {
+                    return detectClasses(info);
+                }
+            } catch (IOException e) {
+                LOG.severe(
+                        String.format(
+                                "Unable to find classes or similar in the provided package-structure {%s}. Halting.",
+                                packageName
+                        )
+                );
+            }
+            return Collections.emptyMap();
+        }
+
+        private static Map<String, Map<String, Map<String, String>>> detectClasses(Set<ClassPath.ClassInfo> classes) {
+            if (classes != null && !classes.isEmpty()) {
+                final Map<String, Map<String, Map<String, String>>> detectedClasses = new TreeMap<>();
+                for (ClassPath.ClassInfo i : classes) {
+                    if (i != null && i.getPackageName() != null) {
+                        try {
+                            detectedClasses.putAll(ByClass.getAnnotationsForClass(Class.forName(i.getName())));
+                        } catch (ClassNotFoundException e) {
+                            LOG.severe(String.format("Unable to get annotations for class. Reason: \n%s", e.getMessage()));
+                        }
+                    }
+                }
+                return detectedClasses;
+            }
+            return Collections.emptyMap();
+        }
 
     }
 
