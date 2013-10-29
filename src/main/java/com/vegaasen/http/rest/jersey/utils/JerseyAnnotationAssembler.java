@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
+ * Todo: Improve massively
+ *
  * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
  */
 final class JerseyAnnotationAssembler {
@@ -18,6 +20,17 @@ final class JerseyAnnotationAssembler {
     private static final String DEFAULT_NON_VALUABLE_ANNOTATION = "true";
 
     private JerseyAnnotationAssembler() {
+    }
+
+    public static Map<String, String> getJerseyAnnotationInformation(final Annotation[] annotations) {
+        if (annotations != null && annotations.length > 0) {
+            Map<String, String> annotationInformation = new HashMap<>();
+            for (Annotation annotation : annotations) {
+                annotationInformation.putAll(getJerseyAnnotationInformation(annotation));
+            }
+            return annotationInformation;
+        }
+        return Collections.emptyMap();
     }
 
     public static Map<String, String> getJerseyAnnotationInformation(final Annotation annotation) {
@@ -34,6 +47,17 @@ final class JerseyAnnotationAssembler {
             return information;
         }
         return Collections.emptyMap();
+    }
+
+    public static boolean isValidJerseyAnnotation(final Annotation... annotations) {
+        boolean valid = false;
+        for (Annotation a : annotations) {
+            if (isValuableAnnotation(a) || isNonValuableAnnotation(a)) {
+                valid = true;
+                break;
+            }
+        }
+        return valid;
     }
 
     private static boolean isValuableAnnotation(final Annotation annotation) {

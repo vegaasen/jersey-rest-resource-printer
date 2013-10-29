@@ -10,6 +10,8 @@ import java.util.*;
 import java.util.logging.Logger;
 
 /**
+ * The cccccccccrazyness!
+ *
  * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
  */
 public final class JerseyResourceUtils {
@@ -25,7 +27,8 @@ public final class JerseyResourceUtils {
 
     public static class ByPackage {
 
-        public static Map<String, Map<String, Map<String, String>>> getAnnotationsFromBasePackage(final String packageName) {
+        public static Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> getAnnotationsFromBasePackage(
+                final String packageName) {
             if (Strings.isNullOrEmpty(packageName)) {
                 return Collections.emptyMap();
             }
@@ -46,9 +49,9 @@ public final class JerseyResourceUtils {
             return Collections.emptyMap();
         }
 
-        private static Map<String, Map<String, Map<String, String>>> detectClasses(Set<ClassPath.ClassInfo> classes) {
+        private static Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> detectClasses(final Set<ClassPath.ClassInfo> classes) {
             if (classes != null && !classes.isEmpty()) {
-                final Map<String, Map<String, Map<String, String>>> detectedClasses = new TreeMap<>();
+                final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> detectedClasses = new TreeMap<>();
                 for (ClassPath.ClassInfo i : classes) {
                     if (i != null && i.getPackageName() != null) {
                         try {
@@ -73,29 +76,51 @@ public final class JerseyResourceUtils {
          * @param clazz _
          * @return _
          */
-        public static Map<String, Map<String, Map<String, String>>> getAnnotationsForClass(final Class clazz) {
+        public static Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> getAnnotationsForClass(final Class clazz) {
             if (clazz != null) {
-                final Map<String, Map<String, Map<String, String>>> detectedAnnotations = new TreeMap<>();
+                final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> detectedAnnotations = new TreeMap<>();
                 //method-level annotations
                 if (clazz.getMethods() != null && clazz.getMethods().length > 0) {
-                    final Map<String, Map<String, String>> detectedMethods = new LinkedHashMap<>();
+                    final Map<String, Map<String, Map<String, Map<String, String>>>> detectedMethods = new LinkedHashMap<>();
                     for (Method method : clazz.getMethods()) {
+                        boolean valid = false;
+                        final Map<String, Map<String, Map<String, String>>> methodAnnotations = new HashMap<>();
+                        final Map<String, Map<String, String>> mannot = new HashMap<>();
                         if (method.getAnnotations() != null && method.getAnnotations().length > 0) {
-                            Map<String, String> detectedMethodAnnotations = new HashMap<>();
-                            for (Annotation a : method.getAnnotations()) {
-                                if (a != null) {
+                            final Map<String, String> detectedMethodAnnotations = new HashMap<>();
+                            for (final Annotation a : method.getAnnotations()) {
+                                if (a != null && JerseyAnnotationAssembler.isValidJerseyAnnotation(a)) {
+                                    valid = true;
                                     detectedMethodAnnotations.putAll(
                                             JerseyAnnotationAssembler.getJerseyAnnotationInformation(a)
                                     );
                                 }
                             }
                             if (!detectedMethodAnnotations.isEmpty()) {
-                                detectedMethods.put(method.getName(), detectedMethodAnnotations);
+                                mannot.put(AnnotationLocation.METHOD.getId(), detectedMethodAnnotations);
                             }
+                        }
+                        if (method.getParameterAnnotations() != null && method.getParameterAnnotations().length > 0) {
+                            final Map<String, String> detectedParameterAnnotations = new HashMap<>();
+                            for (final Annotation[] a : method.getParameterAnnotations()) {
+                                if (a != null && JerseyAnnotationAssembler.isValidJerseyAnnotation(a)) {
+                                    detectedParameterAnnotations.putAll(
+                                            JerseyAnnotationAssembler.getJerseyAnnotationInformation(a)
+                                    );
+                                }
+                            }
+                            if (!detectedParameterAnnotations.isEmpty()) {
+                                mannot.put(AnnotationLocation.PARAMETER.getId(), detectedParameterAnnotations);
+                            }
+                        }
+                        if (valid) {
+                            methodAnnotations.put(method.getName(), mannot);
+                            detectedMethods.put(method.getName(), methodAnnotations);
                         }
                     }
                     //class-level annotations
                     if (clazz.getAnnotations() != null && clazz.getAnnotations().length > 0) {
+                        final Map<String, Map<String, Map<String, String>>> assembledClazzMethodAnnotations = new HashMap<>();
                         final Map<String, String> clazzMethodAnnotations = new HashMap<>();
                         for (Annotation a : clazz.getAnnotations()) {
                             if (a != null) {
@@ -105,7 +130,10 @@ public final class JerseyResourceUtils {
                             }
                         }
                         if (!clazzMethodAnnotations.isEmpty()) {
-                            detectedMethods.put(getClassIdentifier(clazz), clazzMethodAnnotations);
+                            final Map<String, Map<String, String>> m = new HashMap<>();
+                            m.put(AnnotationLocation.METHOD.getId(), clazzMethodAnnotations);
+                            assembledClazzMethodAnnotations.put(getClassIdentifier(clazz), m);
+                            detectedMethods.put("self", assembledClazzMethodAnnotations);
                         }
                     }
                     if (!detectedMethods.isEmpty()) {
@@ -128,8 +156,18 @@ public final class JerseyResourceUtils {
 
     }
 
-    public enum Variant {
-        METHOD, PARAMETERS
+    public enum AnnotationLocation {
+        METHOD("method"), PARAMETER("parameter");
+
+        private String id;
+
+        private AnnotationLocation(String id) {
+            this.id = id;
+        }
+
+        public String getId() {
+            return this.id;
+        }
     }
 
 }
