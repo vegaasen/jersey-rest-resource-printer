@@ -1,7 +1,11 @@
 package com.vegaasen.http.rest.jersey.utils;
 
 import com.vegaasen.http.rest.jersey.abs.AbstractJerseyResourceTest;
+import com.vegaasen.http.rest.jersey.common.Types;
+import com.vegaasen.http.rest.jersey.controller.basic.ControllerWithoutMethods;
 import com.vegaasen.http.rest.jersey.controller.basic.VeryBasicController;
+import com.vegaasen.http.rest.jersey.controller.simple.IHaveAllVerbs;
+import com.vegaasen.http.rest.jersey.controller.simple.VerbsWithValuableAnnotations;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,6 +54,68 @@ public final class JerseyResourceUtilsTest extends AbstractJerseyResourceTest {
         assertTrue(resources.size() > 0);
         assertEquals(1, resources.size());
         //todo: iterate through..
+    }
+
+    @Test
+    public void shouldFindOnlyClassLevelAnnotation() {
+        Map<String, Map<String, Map<String, String>>> resources = JerseyResourceUtils.ByClass.getAnnotationsForClass(ControllerWithoutMethods.class);
+        assertNotNull(resources);
+        assertFalse(resources.isEmpty());
+        assertTrue(resources.size() > 0);
+        for (Map.Entry<String, Map<String, String>> method : resources.get("ControllerWithoutMethods").entrySet()) {
+            assertNotNull(method);
+            assertNotNull(method.getKey());
+            assertNotNull(method.getValue());
+            assertFalse(method.getValue().isEmpty());
+            assertTrue(method.getValue().containsKey(Types.PATH));
+        }
+    }
+
+    @Test
+    public void shouldIterateOverClassWithAllVerbs() {
+        final Class testClass = IHaveAllVerbs.class;
+        testVerbedClass(testClass);
+    }
+
+    @Test
+    public void shouldIterateOverClassWithValuableAnnotations() {
+        final Class testClass = VerbsWithValuableAnnotations.class;
+        Map<String, Map<String, Map<String, String>>> resources = testVerbedClass(testClass);
+        assertNotNull(resources);
+        Map<String, Map<String, String>> methods = resources.get(testClass.getSimpleName());
+        String methodToTest = "calculateDaysToMillis";
+        for (Map.Entry<String, Map<String, String>> method : methods.entrySet()) {
+            assertNotNull(method);
+            assertNotNull(method.getKey());
+            if (method.getKey().equals(methodToTest)) {
+                assertNotNull(method.getValue());
+                assertTrue(method.getValue().containsKey("GET"));
+                assertEquals("true", method.getValue().get("GET"));
+                assertTrue(method.getValue().containsKey(Types.CONSUMES));
+                assertEquals("{*/*}", method.getValue().get(Types.CONSUMES));
+                assertTrue(method.getValue().containsKey(Types.PATH));
+                assertEquals("{days/{days}}", method.getValue().get(Types.PATH));
+            }
+        }
+    }
+
+    protected Map<String, Map<String, Map<String, String>>> testVerbedClass(final Class clazz) {
+        Map<String, Map<String, Map<String, String>>> resources = JerseyResourceUtils.ByClass.getAnnotationsForClass(clazz);
+        assertNotNull(resources);
+        assertFalse(resources.isEmpty());
+        assertTrue(resources.size() > 0);
+        assertEquals(1, resources.size());
+        int numOfMethods = TestUtils.numOfMethodsInThisClass(clazz);
+        assertNotNull(numOfMethods);
+        assertTrue(numOfMethods > 0);
+        assertFalse(resources.containsKey(clazz.getName()));
+        assertTrue(resources.containsKey(clazz.getSimpleName()));
+        Map<String, Map<String, String>> methods = resources.get(clazz.getSimpleName());
+        assertNotNull(methods);
+        assertFalse(methods.isEmpty());
+        assertTrue(String.format("Size didnt match. Expected: {%s} (or more..). Found: {%s}", numOfMethods, methods.size()),
+                methods.size() >= numOfMethods);
+        return resources;
     }
 
 }

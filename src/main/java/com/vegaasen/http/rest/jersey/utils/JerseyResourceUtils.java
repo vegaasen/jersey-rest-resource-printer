@@ -76,6 +76,7 @@ public final class JerseyResourceUtils {
         public static Map<String, Map<String, Map<String, String>>> getAnnotationsForClass(final Class clazz) {
             if (clazz != null) {
                 final Map<String, Map<String, Map<String, String>>> detectedAnnotations = new TreeMap<>();
+                //method-level annotations
                 if (clazz.getMethods() != null && clazz.getMethods().length > 0) {
                     final Map<String, Map<String, String>> detectedMethods = new LinkedHashMap<>();
                     for (Method method : clazz.getMethods()) {
@@ -93,6 +94,7 @@ public final class JerseyResourceUtils {
                             }
                         }
                     }
+                    //class-level annotations
                     if (clazz.getAnnotations() != null && clazz.getAnnotations().length > 0) {
                         final Map<String, String> clazzMethodAnnotations = new HashMap<>();
                         for (Annotation a : clazz.getAnnotations()) {
@@ -107,7 +109,7 @@ public final class JerseyResourceUtils {
                         }
                     }
                     if (!detectedMethods.isEmpty()) {
-                        detectedAnnotations.put(clazz.getName(), detectedMethods);
+                        detectedAnnotations.put(clazz.getSimpleName(), detectedMethods);
                     }
                 }
                 return detectedAnnotations;
@@ -124,6 +126,10 @@ public final class JerseyResourceUtils {
             return id;
         }
 
+    }
+
+    public enum Variant {
+        METHOD, PARAMETERS
     }
 
 }
