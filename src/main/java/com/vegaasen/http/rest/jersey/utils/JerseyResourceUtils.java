@@ -28,13 +28,13 @@ public final class JerseyResourceUtils {
     public static class ByPackage {
 
         public static Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> getAnnotationsFromBasePackage(
-                final String packageName) {
-            if (Strings.isNullOrEmpty(packageName)) {
+                final String pckg) {
+            if (Strings.isNullOrEmpty(pckg)) {
                 return Collections.emptyMap();
             }
             try {
                 final ClassPath classPath = ClassPath.from(JerseyResourceUtils.class.getClassLoader());
-                final Set<ClassPath.ClassInfo> info = classPath.getTopLevelClassesRecursive(packageName);
+                final Set<ClassPath.ClassInfo> info = classPath.getTopLevelClassesRecursive(pckg);
                 if (info != null && info.size() > 0) {
                     return detectClasses(info);
                 }
@@ -42,7 +42,7 @@ public final class JerseyResourceUtils {
                 LOG.severe(
                         String.format(
                                 "Unable to find classes or similar in the provided package-structure {%s}. Halting.",
-                                packageName
+                                pckg
                         )
                 );
             }

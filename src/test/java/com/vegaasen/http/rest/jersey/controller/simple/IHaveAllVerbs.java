@@ -4,7 +4,6 @@ import com.vegaasen.http.rest.jersey.controller.abs.AbstractController;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.lang.reflect.Method;
 
 /**
  * "Controller" that exposes all the various verbs current supported in jersey

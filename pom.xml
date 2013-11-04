@@ -34,7 +34,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>14.0.1</version>
+            <version>${guava.version}</version>
         </dependency>
         <!--JAX-RS-->
         <dependency>
@@ -96,12 +96,24 @@
                 <directory>${basedir}/src/main/resources</directory>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <properties>
         <jdk.version>1.7</jdk.version>
         <jetty.version>9.0.6.v20130930</jetty.version>
         <jersey.version>1.17.1</jersey.version>
+        <guava.version>15.0</guava.version>
         <project.scope.type>test</project.scope.type>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

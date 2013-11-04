@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 /**
  * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
  */
-public final class JerseyResourceUtilsTest extends AbstractJerseyResourceTest {
+public final class JerseyResourceUtilsByClassTest extends AbstractJerseyResourceTest {
 
     @Before
     public void setUp() throws Exception {
