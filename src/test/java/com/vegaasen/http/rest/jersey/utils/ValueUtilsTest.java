@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
-public class ValueUtilsTest {
+public final class ValueUtilsTest {
 
     @Test
     public void shouldAssembleValues() {

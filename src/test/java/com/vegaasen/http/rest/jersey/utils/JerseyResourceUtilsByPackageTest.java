@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 /**
  * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
-public class JerseyResourceUtilsByPackageTest extends AbstractJerseyResourceTest {
+public final class JerseyResourceUtilsByPackageTest extends AbstractJerseyResourceTest {
 
     private static final String DEFAULT_JERSEY_CNTRLLR_PACKAGE = "com.vegaasen.http.rest.jersey.controller";
 
@@ -25,7 +25,7 @@ public class JerseyResourceUtilsByPackageTest extends AbstractJerseyResourceTest
 
     @Test
     public void findResultsByPackage() {
-        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotationsFromBasePackage(DEFAULT_JERSEY_CNTRLLR_PACKAGE);
+        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotations(DEFAULT_JERSEY_CNTRLLR_PACKAGE);
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertTrue(result.size() > 1);
@@ -34,38 +34,38 @@ public class JerseyResourceUtilsByPackageTest extends AbstractJerseyResourceTest
 
     @Test
     public void shouldNotFindAnyPackageWithinPackageScope() {
-        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotationsFromBasePackage("god.knows.where");
+        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotations("god.knows.where");
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
     public void shouldFindNoControllersAsClassContainsNoAnnotation() {
-        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotationsFromBasePackage(DEFAULT_JERSEY_CNTRLLR_PACKAGE + ".abs");
+        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotations(DEFAULT_JERSEY_CNTRLLR_PACKAGE + ".abs");
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
     public void shouldNotTriggerOnNilledObject() {
-        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotationsFromBasePackage(null);
+        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotations(null);
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
     public void shouldNotTriggerOnEmptyObject() {
-        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotationsFromBasePackage("");
+        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotations("");
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
     public void shouldFindSameAmountAsContollerView() {
-        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotationsFromBasePackage("com.vegaasen");
+        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotations("com.vegaasen");
         assertNotNull(result);
         assertFalse(result.isEmpty());
-        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resultByDefinedClasspath = JerseyResourceUtils.ByPackage.getAnnotationsFromBasePackage(DEFAULT_JERSEY_CNTRLLR_PACKAGE);
+        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resultByDefinedClasspath = JerseyResourceUtils.ByPackage.getAnnotations(DEFAULT_JERSEY_CNTRLLR_PACKAGE);
         assertNotNull(resultByDefinedClasspath);
         assertFalse(resultByDefinedClasspath.isEmpty());
         assertTrue(resultByDefinedClasspath.size() > 1);
@@ -74,7 +74,7 @@ public class JerseyResourceUtilsByPackageTest extends AbstractJerseyResourceTest
 
     @Test
     public void shouldContainIHaveAllVerbs() {
-        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotationsFromBasePackage(DEFAULT_JERSEY_CNTRLLR_PACKAGE);
+        final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByPackage.getAnnotations(DEFAULT_JERSEY_CNTRLLR_PACKAGE);
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertTrue(result.size() > 1);
@@ -83,8 +83,8 @@ public class JerseyResourceUtilsByPackageTest extends AbstractJerseyResourceTest
         assertTrue(method.containsKey("delete"));
         assertTrue(method.containsKey("post"));
         assertTrue(method.containsKey("self"));
-        assertNotNull(method.get("head").get("head").get("method"));
-        Map<String, String> methodForHead = method.get("head").get("head").get("method");
+        assertNotNull(method.get("head").get("head").get(JerseyResourceUtils.AnnotationLocation.PRESEDENCE.getId()));
+        Map<String, String> methodForHead = method.get("head").get("head").get(JerseyResourceUtils.AnnotationLocation.PRESEDENCE.getId());
         assertNotNull(methodForHead);
         assertFalse(methodForHead.isEmpty());
         assertTrue(methodForHead.containsKey("HEAD"));

@@ -26,21 +26,21 @@ public final class JerseyResourceUtilsByClassTest extends AbstractJerseyResource
 
     @Test
     public void shouldReturnEmptyOnNull() {
-        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByClass.getAnnotationsForClass(null);
+        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> result = JerseyResourceUtils.ByClass.getAnnotations(null);
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
     public void shouldNotFindAnyRelevantAnnotations() {
-        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resources = JerseyResourceUtils.ByClass.getAnnotationsForClass(this.getClass());
+        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resources = JerseyResourceUtils.ByClass.getAnnotations(this.getClass());
         assertNotNull(resources);
         assertTrue(resources.isEmpty());
     }
 
     @Test
     public void shouldFindTheSimpleController() {
-        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resources = JerseyResourceUtils.ByClass.getAnnotationsForClass(VeryBasicController.class);
+        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resources = JerseyResourceUtils.ByClass.getAnnotations(VeryBasicController.class);
         assertNotNull(resources);
         assertFalse(resources.isEmpty());
         assertTrue(resources.size() > 0);
@@ -49,7 +49,7 @@ public final class JerseyResourceUtilsByClassTest extends AbstractJerseyResource
 
     @Test
     public void shouldFindSimpleControllerAndSomeAnnotations() {
-        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resources = JerseyResourceUtils.ByClass.getAnnotationsForClass(VeryBasicController.class);
+        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resources = JerseyResourceUtils.ByClass.getAnnotations(VeryBasicController.class);
         assertNotNull(resources);
         assertFalse(resources.isEmpty());
         assertTrue(resources.size() > 0);
@@ -59,7 +59,7 @@ public final class JerseyResourceUtilsByClassTest extends AbstractJerseyResource
 
     @Test
     public void shouldFindOnlyClassLevelAnnotation() {
-        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resources = JerseyResourceUtils.ByClass.getAnnotationsForClass(ControllerWithoutMethods.class);
+        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resources = JerseyResourceUtils.ByClass.getAnnotations(ControllerWithoutMethods.class);
         assertNotNull(resources);
         assertFalse(resources.isEmpty());
         assertTrue(resources.size() > 0);
@@ -89,7 +89,7 @@ public final class JerseyResourceUtilsByClassTest extends AbstractJerseyResource
             assertNotNull(method.getKey());
             if (method.getKey().equals(methodToTest)) {
                 assertNotNull(method.getValue());
-                Map<String, String> methodAnnotations = method.getValue().get(methodToTest).get(JerseyResourceUtils.AnnotationLocation.METHOD.getId());
+                Map<String, String> methodAnnotations = method.getValue().get(methodToTest).get(JerseyResourceUtils.AnnotationLocation.PRESEDENCE.getId());
                 assertTrue(methodAnnotations.containsKey("GET"));
                 assertEquals("true", methodAnnotations.get("GET"));
                 assertTrue(methodAnnotations.containsKey(Types.CONSUMES));
@@ -101,7 +101,7 @@ public final class JerseyResourceUtilsByClassTest extends AbstractJerseyResource
     }
 
     protected Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> testVerbedClass(final Class clazz) {
-        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resources = JerseyResourceUtils.ByClass.getAnnotationsForClass(clazz);
+        Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> resources = JerseyResourceUtils.ByClass.getAnnotations(clazz);
         assertNotNull(resources);
         assertFalse(resources.isEmpty());
         assertTrue(resources.size() > 0);
