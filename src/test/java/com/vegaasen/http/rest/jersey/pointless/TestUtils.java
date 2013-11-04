@@ -1,9 +1,9 @@
-package com.vegaasen.http.rest.jersey.utils;
+package com.vegaasen.http.rest.jersey.pointless;
 
 import java.lang.reflect.Method;
 
 /**
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 public final class TestUtils {
 

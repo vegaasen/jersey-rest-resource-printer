@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 @Path("/basic")
 public final class VeryBasicController extends AbstractController {

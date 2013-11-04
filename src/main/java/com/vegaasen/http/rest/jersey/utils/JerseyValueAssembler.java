@@ -7,7 +7,7 @@ import java.lang.annotation.Annotation;
 import java.util.logging.Logger;
 
 /**
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 final class JerseyValueAssembler {
 

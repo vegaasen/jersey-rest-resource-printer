@@ -3,7 +3,7 @@ package com.vegaasen.http.rest.jersey.common;
 /**
  * This contains all the registered types that exists within a Jersey-context.
  *
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 public final class Types {
 

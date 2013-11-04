@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 final class ValueUtils {
 

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * The cccccccccrazyness!
  *
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 public final class JerseyResourceUtils {
 

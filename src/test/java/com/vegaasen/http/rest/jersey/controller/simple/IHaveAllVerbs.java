@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 /**
  * "Controller" that exposes all the various verbs current supported in jersey
  *
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  * @version jersey-1.17.1
  */
 @Path("/simple")

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * Todo: Improve massively
  *
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 final class JerseyAnnotationAssembler {
 

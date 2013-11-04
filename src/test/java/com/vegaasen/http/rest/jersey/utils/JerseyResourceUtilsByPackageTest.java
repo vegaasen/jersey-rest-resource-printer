@@ -12,7 +12,7 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 /**
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 public class JerseyResourceUtilsByPackageTest extends AbstractJerseyResourceTest {
 

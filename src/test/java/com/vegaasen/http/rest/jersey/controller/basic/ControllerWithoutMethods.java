@@ -5,7 +5,7 @@ import javax.ws.rs.Path;
 /**
  * I ain't got no methods!
  *
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 @Path("no-methods")
 public final class ControllerWithoutMethods {

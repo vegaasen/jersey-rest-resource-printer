@@ -9,7 +9,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 /**
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 public final class JerseyAnnotationAssemblerTest {
 

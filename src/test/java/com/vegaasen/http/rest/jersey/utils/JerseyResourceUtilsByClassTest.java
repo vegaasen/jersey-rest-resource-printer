@@ -6,6 +6,7 @@ import com.vegaasen.http.rest.jersey.controller.basic.ControllerWithoutMethods;
 import com.vegaasen.http.rest.jersey.controller.basic.VeryBasicController;
 import com.vegaasen.http.rest.jersey.controller.simple.IHaveAllVerbs;
 import com.vegaasen.http.rest.jersey.controller.simple.VerbsWithValuableAnnotations;
+import com.vegaasen.http.rest.jersey.pointless.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 /**
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 public final class JerseyResourceUtilsByClassTest extends AbstractJerseyResourceTest {
 

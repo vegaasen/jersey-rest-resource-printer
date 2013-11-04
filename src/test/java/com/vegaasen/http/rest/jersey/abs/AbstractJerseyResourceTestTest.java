@@ -3,7 +3,7 @@ package com.vegaasen.http.rest.jersey.abs;
 import org.junit.Before;
 
 /**
- * @author <a href="vegard.aasen@gmail.com">vegardaasen</a>
+ * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
 public final class AbstractJerseyResourceTestTest extends AbstractJerseyResourceTest {
 
