@@ -9,11 +9,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <description>
-        Simple webapp that can either start independently (recommended) or as a embedded webapp in a container-sphere
-        (ala Tomcat, weblogic etc.). The application will initialize a RESTful (through Jersey) stuff that exposes a
-        GetAccess configuration-file
-        that is placed in various locations on the disk (can be specified, or auto-guessed based on default
-        installation-paths)
+        Simple jersey-resource localizator. It can find all classes that has been annotated with jersey-specific types,
+        and from there build objects(or maps) based on this.
+        In the (very) near future, this can also print static webpages that can operate on the same Jersey-urls.
+        Could be cool, or not. We'll see!
     </description>
     <packaging>jar</packaging>
 
@@ -21,12 +20,7 @@
         <developer>
             <id>t769765</id>
             <name>Vegard Aasen</name>
-            <email>vegaasen@telenor.com</email>
-        </developer>
-        <developer>
-            <id>aainla</id>
-            <name>Ingar Lamer</name>
-            <email>ingar.lamer@telenor.com</email>
+            <email>vegaasen@gmail.com</email>
         </developer>
     </developers>
 
