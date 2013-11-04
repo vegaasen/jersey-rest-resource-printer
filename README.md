@@ -5,11 +5,11 @@ jersey-rest-resource-printer
 
 During the recent years I've been fiddeling a lot with the Sun Jersey libraries and written quite a lot of services using this awsome library. However, I often get a question similar to this:
 
-Hey! What services does this API provide?
+Hey! What services does this API provide - and do you have some simple app to test these apis?
 
 ..And then, each time - I have to give it a thought and produce the same answer each time:
 
-"Uh, I dunno!:P"
+"Uh, I dunno!:P", or "uh, no:-)"
 
 Which results in me digging in to my own code to find all the restified methods within the application.
 
