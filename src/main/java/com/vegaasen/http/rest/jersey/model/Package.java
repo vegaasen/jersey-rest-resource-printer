@@ -1,14 +1,15 @@
 package com.vegaasen.http.rest.jersey.model;
 
+import com.vegaasen.http.rest.jersey.model.abs.NamedElement;
+
 import java.util.Set;
 
 /**
  * @author <a href="vegaasen@gmail.com">vegardaasen</a>
  */
-public class Package {
+public final class Package extends NamedElement {
 
     private String structure;
-    private long accessed;
     private Set<ClassInfo> classes;
 
 }

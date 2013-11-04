@@ -2,6 +2,7 @@ package com.vegaasen.http.rest.jersey.utils;
 
 import com.google.common.base.Strings;
 import com.google.common.reflect.ClassPath;
+import com.vegaasen.http.rest.jersey.model.ClassInfo;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -78,8 +79,11 @@ public final class JerseyResourceUtils {
          */
         public static Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> getAnnotationsForClass(final Class clazz) {
             if (clazz != null) {
+                ClassInfo classInfo = new ClassInfo();
+                classInfo.setName(clazz.getSimpleName());
+                classInfo.setAccessed(System.currentTimeMillis());
+                classInfo.setPath(clazz.getName());
                 final Map<String, Map<String, Map<String, Map<String, Map<String, String>>>>> detectedAnnotations = new TreeMap<>();
-                //method-level annotations
                 if (clazz.getMethods() != null && clazz.getMethods().length > 0) {
                     final Map<String, Map<String, Map<String, Map<String, String>>>> detectedMethods = new LinkedHashMap<>();
                     for (Method method : clazz.getMethods()) {
